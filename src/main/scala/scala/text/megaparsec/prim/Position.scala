@@ -1,7 +1,6 @@
-package text.megaparsec.prim
+package scala.text.megaparsec.prim
 
-import scala.util.Try
-import scala.util.{Failure, Success}
+import scala.util.{Failure, Success, Try}
 
 
 object InvalidPositionException {
@@ -19,6 +18,8 @@ object Position {
       Failure(InvalidPositionException())
     }
   }
+
+  def defaultTabWidth: Position = Position(8).get
 }
 
 class Position(pos: Int) {

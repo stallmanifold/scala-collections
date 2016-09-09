@@ -15,3 +15,7 @@ lazy val root = (project in file(".")).
   )
 
 libraryDependencies ++= Seq(scalaz, scalactic, scalatest)
+
+scalacOptions += "-feature"
+
+initialCommands in console := "import scalaz._, Scalaz._"
