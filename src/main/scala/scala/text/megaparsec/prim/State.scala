@@ -6,7 +6,7 @@ object State {
 
 }
 
-class State[S] {
+abstract class State[S] {
   val stateInput: S
   val statePos: NonEmpty[Position]
   val stateTabWidth: Position
