@@ -16,6 +16,12 @@ sealed abstract class NonEmpty[+A] {
     new ::|(x, this)
   }
 
+  def :::|[B >: A](prefix: NonEmpty[B]): NonEmpty[B] = {
+    prefix match {
+      case ::|(head, tail) => (tail :::| this).::|(head)
+      case Tail(lastValue) => this.::|(lastValue)
+    }
+  }
 }
 
 final case class ::|[A](value: A, private[scala] var tl: NonEmpty[A]) extends NonEmpty[A] {
