@@ -22,6 +22,13 @@ sealed abstract class NonEmpty[+A] {
       case Tail(lastValue) => this.::|(lastValue)
     }
   }
+
+  final def map[B](f: (A) => B): NonEmpty[B] = {
+    this match {
+      case ::|(head, tail) => tail.map(f).::|(f(head))
+      case Tail(lastValue) => Tail(f(lastValue))
+    }
+  }
 }
 
 final case class ::|[A](value: A, private[scala] var tl: NonEmpty[A]) extends NonEmpty[A] {
