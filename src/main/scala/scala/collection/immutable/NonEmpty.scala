@@ -1,4 +1,6 @@
-package scala.collection.immutable
+package scala
+package collection
+package immutable
 
 import scala.collection.{GenTraversableOnce}
 
