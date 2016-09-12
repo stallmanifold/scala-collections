@@ -2,7 +2,7 @@ package scala
 package collection
 package mutable
 
-
+/*
 object NonEmptyListBuffer {
   def apply[A](head: A): NonEmptyListBuffer[A] = {
     new NonEmptyListBuffer(head)
@@ -16,16 +16,17 @@ object NonEmptyListBuffer {
   }
 }
 
-class NonEmptyListBuffer[A](private var head: A) {
+class NonEmptyListBuffer[A <: AnyRef](override private var head: A) extends Cloneable[A] {
   private var tail: ListBuffer[A] = ListBuffer()
+  private var len: Int = 1
 
-  def ++=(xs: TraversableOnce[A]): NonEmptyListBuffer[A] = {
+  override def ++=(xs: TraversableOnce[A]): NonEmptyListBuffer[A] = {
     this.tail ++= xs
 
     this
   }
 
-  def ++=:(xs: TraversableOnce[A]): NonEmptyListBuffer[A] = {
+  override def ++=:(xs: TraversableOnce[A]): NonEmptyListBuffer[A] = {
     val iterator: Iterator[A] = xs.toIterator
     if (iterator.hasNext) {
       this.head +=:  this.tail
@@ -35,4 +36,41 @@ class NonEmptyListBuffer[A](private var head: A) {
 
     this
   }
+
+  def +=(x: A): NonEmptyListBuffer[A] = {
+    this.tail += x
+
+    this
+  }
+
+  def +=:(x: A): NonEmptyListBuffer[A] = {
+    this.head +=: this.tail
+    this.head = x
+
+    this
+  }
+
+  def apply(n: Int): A = {
+    n match {
+      case 0 => this.head
+      case _ => this.tail.apply(n-1)
+    }
+  }
+
+  def update(n: Int, newElem: A): Unit = {
+    n match {
+      case 0 => this.head = newElem
+      case _ => this.tail.update(n-1, newElem)
+    }
+  }
+
+  def length: Int = this.len
+
+  override def clone(): NonEmptyListBuffer[A] = {
+    val newHead = this.head.clone()
+    val newTail = this.tail.clone()
+
+    new NonEmptyListBuffer(newHead, newTail)
+  }
 }
+*/
